@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             FilamentAdminSeeder::class,
+            UserSeeder::class,
         ]);
     }
 }
