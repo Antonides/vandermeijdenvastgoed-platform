@@ -24,11 +24,17 @@ class Project extends Model
         'completion_date',
         'demolition_contractor_id',
         'build_contractor_id',
+        'oppervlakte_perceel',
+        'oppervlakte_begane_grond',
+        'oppervlakte_verdieping',
     ];
 
     protected $casts = [
         'start_build_date' => 'date',
         'completion_date' => 'date',
+        'oppervlakte_perceel' => 'decimal:2',
+        'oppervlakte_begane_grond' => 'decimal:2',
+        'oppervlakte_verdieping' => 'decimal:2',
     ];
 
     public function notes(): HasMany

@@ -20,7 +20,7 @@ class ProjectForm
                 ->schema([
                     Textarea::make('description')
                         ->label('Beschrijving')
-                ->rows(3)
+                        ->rows(3)
                         ->columnSpanFull(),
                     Select::make('project_status')
                         ->label('Status')
@@ -98,6 +98,29 @@ class ProjectForm
                         ->searchable()
                         ->preload()
                         ->native(false),
+                ]),
+            Section::make('Volume')
+                ->columns(3)
+                ->columnSpanFull()
+                ->schema([
+                    TextInput::make('oppervlakte_perceel')
+                        ->label('Oppervlakte perceel')
+                        ->numeric()
+                        ->suffix('m²')
+                        ->step(0.01)
+                        ->minValue(0),
+                    TextInput::make('oppervlakte_begane_grond')
+                        ->label('Oppervlakte begane grond')
+                        ->numeric()
+                        ->suffix('m²')
+                        ->step(0.01)
+                        ->minValue(0),
+                    TextInput::make('oppervlakte_verdieping')
+                        ->label('Oppervlakte verdieping')
+                        ->numeric()
+                        ->suffix('m²')
+                        ->step(0.01)
+                        ->minValue(0),
                 ]),
         ];
     }

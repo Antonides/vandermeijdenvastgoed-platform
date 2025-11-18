@@ -46,14 +46,6 @@ class WorkPreparationsRelationManager extends RelationManager
                         default => 'secondary',
                     })
                     ->sortable(),
-                TextColumn::make('planned_date')
-                    ->label('Planning')
-                    ->date()
-                    ->sortable(),
-                TextColumn::make('received_date')
-                    ->label('Ontvangst')
-                    ->date()
-                    ->sortable(),
                 TextColumn::make('party')
                     ->label('Partij')
                     ->toggleable(),
@@ -62,13 +54,15 @@ class WorkPreparationsRelationManager extends RelationManager
                     ->limit(40)
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->defaultSort('planned_date', 'asc')
+            ->defaultSort('component', 'asc')
             ->headerActions([
                 CreateAction::make()
-                    ->label('Nieuwe werkvoorbereiding'),
+                    ->label('Nieuwe werkvoorbereiding')
+                    ->modalHeading('Werkvoorbereiding toevoegen'),
             ])
             ->recordActions([
-                EditAction::make(),
+                EditAction::make()
+                    ->modalHeading('Werkvoorbereiding bewerken'),
                 DeleteAction::make(),
             ]);
     }

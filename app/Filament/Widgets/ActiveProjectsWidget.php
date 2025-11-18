@@ -8,11 +8,11 @@ use Filament\Widgets\Widget;
 class ActiveProjectsWidget extends Widget
 {
     protected static ?int $sort = 1;
-    
+
     protected string $view = 'filament.widgets.active-projects-widget';
 
-    protected int | string | array $columnSpan = 'full';
-    
+    protected int|string|array $columnSpan = 'full';
+
     protected ?string $heading = '';
 
     public function getActiveProjects()
@@ -27,7 +27,7 @@ class ActiveProjectsWidget extends Widget
                     $project->street,
                 ]);
                 $title = implode(', ', $parts) ?: '-';
-                
+
                 return [
                     'id' => $project->id,
                     'title' => $title,

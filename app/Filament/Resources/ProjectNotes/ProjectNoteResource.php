@@ -10,11 +10,11 @@ use App\Filament\Resources\ProjectNotes\Schemas\ProjectNoteForm;
 use App\Filament\Resources\ProjectNotes\Tables\ProjectNotesTable;
 use App\Models\ProjectNote;
 use BackedEnum;
-use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class ProjectNoteResource extends Resource
 {

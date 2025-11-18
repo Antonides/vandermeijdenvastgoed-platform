@@ -21,6 +21,7 @@ class ProjectsTable
                             $record->city,
                             $record->street,
                         ]);
+
                         return implode(', ', $parts) ?: '-';
                     })
                     ->searchable(query: function ($query, $search) {

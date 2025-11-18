@@ -12,8 +12,11 @@ class ProjectNote extends Model
     use HasFactory;
 
     public const STATUS_ACTION = 'actie';
+
     public const STATUS_IN_PROGRESS = 'lopend';
+
     public const STATUS_COMPLETED = 'afgerond';
+
     public const STATUS_INFO = 'informatief';
 
     /**

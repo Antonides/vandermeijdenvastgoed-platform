@@ -9,11 +9,11 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 class ProjectStatsOverview extends BaseWidget
 {
     protected static ?int $sort = 0;
-    
-    protected int | string | array $columnSpan = 'full';
-    
+
+    protected int|string|array $columnSpan = 'full';
+
     protected ?string $heading = '';
-    
+
     protected function getStats(): array
     {
         return [
@@ -21,12 +21,12 @@ class ProjectStatsOverview extends BaseWidget
                 ->description('Projecten in planning')
                 ->descriptionIcon('heroicon-m-calendar')
                 ->color('warning'),
-            
+
             Stat::make('', Project::where('project_status', 'lopend')->count())
                 ->description('Lopende projecten')
                 ->descriptionIcon('heroicon-m-arrow-path')
                 ->color('info'),
-            
+
             Stat::make('', Project::where('project_status', 'afgerond')->count())
                 ->description('Voltooide projecten')
                 ->descriptionIcon('heroicon-m-check-circle')

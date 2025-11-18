@@ -4,11 +4,11 @@ namespace App\Filament\Resources\Projects\RelationManagers;
 
 use App\Filament\Resources\ProjectNotes\Schemas\ProjectNoteForm;
 use App\Models\ProjectNote;
-use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Schemas\Schema;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
+use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;

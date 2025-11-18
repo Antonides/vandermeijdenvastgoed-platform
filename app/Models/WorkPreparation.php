@@ -11,7 +11,9 @@ class WorkPreparation extends Model
     use HasFactory;
 
     public const STATUS_ACTION = 'actie';
+
     public const STATUS_IN_PROGRESS = 'lopend';
+
     public const STATUS_COMPLETED = 'afgerond';
 
     /**
@@ -52,6 +54,13 @@ class WorkPreparation extends Model
         'party',
         'status',
         'note',
+        // Offerte
+        'quote_request_date',
+        'quote_received_date',
+        'quote_approved_date',
+        // Uitvoering
+        'execution_date',
+        'execution_received_date',
     ];
 
     /**
@@ -61,6 +70,13 @@ class WorkPreparation extends Model
         'request_date' => 'date',
         'planned_date' => 'date',
         'received_date' => 'date',
+        // Offerte
+        'quote_request_date' => 'date',
+        'quote_received_date' => 'date',
+        'quote_approved_date' => 'date',
+        // Uitvoering
+        'execution_date' => 'date',
+        'execution_received_date' => 'date',
     ];
 
     /**
