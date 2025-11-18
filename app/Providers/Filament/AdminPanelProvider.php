@@ -10,6 +10,7 @@ use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\View\PanelsRenderHook;
 use App\Filament\Widgets\ActiveProjectsWidget;
 use App\Filament\Widgets\ProjectStatsOverview;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
@@ -18,6 +19,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Illuminate\Support\Facades\Blade;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -54,6 +56,18 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->renderHook(
+                PanelsRenderHook::GLOBAL_SEARCH_AFTER,
+                fn (): string => Blade::render('
+                    <div class="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200">
+                        <x-filament::icon 
+                            icon="heroicon-o-calendar" 
+                            class="h-5 w-5"
+                        />
+                        <span>Week {{ now()->format("W") }}</span>
+                    </div>
+                ')
+            );
     }
 }
