@@ -39,11 +39,13 @@ class ContractorForm
                             ->maxLength(255)
                             ->columnSpan(1),
                         Select::make('specialization')
-                            ->label('Specialisatie')
+                            ->label('Discipline')
                             ->options([
-                                'demolition' => 'Sloop',
-                                'construction' => 'Bouw',
-                                'both' => 'Beide',
+                                'sloop' => 'Sloop',
+                                'nieuwbouw' => 'Nieuwbouw',
+                                'nutsvoorziening' => 'Nutsvoorziening',
+                                'gemeente' => 'Gemeente',
+                                'toezichthouder' => 'Toezichthouder',
                             ])
                             ->searchable()
                             ->nullable()

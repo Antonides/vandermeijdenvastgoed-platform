@@ -30,11 +30,13 @@ class ContractorsTable
                     ->label('E-mail')
                     ->toggleable(),
                 TextColumn::make('specialization')
-                    ->label('Specialisatie')
+                    ->label('Discipline')
                     ->formatStateUsing(fn (?string $state) => match ($state) {
-                        'demolition' => 'Sloop',
-                        'construction' => 'Bouw',
-                        'both' => 'Beide',
+                        'sloop' => 'Sloop',
+                        'nieuwbouw' => 'Nieuwbouw',
+                        'nutsvoorziening' => 'Nutsvoorziening',
+                        'gemeente' => 'Gemeente',
+                        'toezichthouder' => 'Toezichthouder',
                         default => null,
                     })
                     ->placeholder('—')

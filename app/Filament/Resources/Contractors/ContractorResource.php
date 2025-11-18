@@ -21,11 +21,11 @@ class ContractorResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
-    protected static ?string $modelLabel = 'Aannemer';
+    protected static ?string $modelLabel = 'Partij';
 
-    protected static ?string $pluralModelLabel = 'Aannemers';
+    protected static ?string $pluralModelLabel = 'Partijen';
 
-    protected static ?string $navigationLabel = 'Aannemers';
+    protected static ?string $navigationLabel = 'Partijen';
 
     protected static string|UnitEnum|null $navigationGroup = 'Projectbeheer';
 
