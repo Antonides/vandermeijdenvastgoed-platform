@@ -57,7 +57,7 @@ class ProjectsTable
                         default => $state,
                     })
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(),
                 TextColumn::make('city')
                     ->label('Plaats')
                     ->sortable()
@@ -67,7 +67,7 @@ class ProjectsTable
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('house_number')
                     ->label('Nr.')
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(),
                 TextColumn::make('permit')
                     ->label('Vergunning')
                     ->badge()
@@ -83,7 +83,7 @@ class ProjectsTable
                         'aangevraagd' => 'warning',
                         default => 'secondary',
                     })
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(),
                 TextColumn::make('current_term')
                     ->label('Huidige termijn')
                     ->toggleable(isToggledHiddenByDefault: true),
