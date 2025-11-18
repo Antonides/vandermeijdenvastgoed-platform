@@ -18,6 +18,7 @@ class Tender extends Model
         'contractor_id',
         'component',
         'request_date',
+        'planning_date',
         'received_date',
         'total_price',
         'note',
@@ -28,9 +29,39 @@ class Tender extends Model
      */
     protected $casts = [
         'request_date' => 'date',
+        'planning_date' => 'date',
         'received_date' => 'date',
         'total_price' => 'decimal:2',
     ];
+
+    /**
+     * @var list<string>
+     */
+    protected $appends = [
+        'price_per_square_meter',
+    ];
+
+    /**
+     * Get the calculated price per square meter based on component type.
+     */
+    public function getPricePerSquareMeterAttribute(): ?float
+    {
+        if (!$this->total_price || !$this->project) {
+            return null;
+        }
+
+        $area = match ($this->component) {
+            'Nieuwbouw' => $this->project->oppervlakte_begane_grond,
+            'Sloopwerkzaamheden' => $this->project->oppervlakte_perceel,
+            default => null,
+        };
+
+        if (!$area || $area <= 0) {
+            return null;
+        }
+
+        return round($this->total_price / $area, 2);
+    }
 
     public function project(): BelongsTo
     {

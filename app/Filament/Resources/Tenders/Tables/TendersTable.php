@@ -31,18 +31,46 @@ class TendersTable
                     ->sortable(),
                 TextColumn::make('request_date')
                     ->label('Aanvraag')
-                    ->date()
+                    ->date('d-m-Y')
+                    ->sortable()
+                    ->toggleable(),
+                TextColumn::make('planning_date')
+                    ->label('Planning')
+                    ->date('d-m-Y')
                     ->sortable()
                     ->toggleable(),
                 TextColumn::make('received_date')
                     ->label('Ontvangst')
-                    ->date()
+                    ->date('d-m-Y')
                     ->sortable()
                     ->toggleable(),
                 TextColumn::make('total_price')
-                    ->label('Totaal prijs')
+                    ->label('Totaalprijs')
                     ->money('eur', true)
                     ->sortable()
+                    ->toggleable(),
+                TextColumn::make('price_per_square_meter')
+                    ->label('Meterprijs')
+                    ->state(function ($record): ?string {
+                        $pricePerM2 = $record->price_per_square_meter;
+
+                        return $pricePerM2 ? '€ '.number_format($pricePerM2, 2, ',', '.').'/m²' : '-';
+                    })
+                    ->sortable(query: function ($query, string $direction) {
+                        return $query
+                            ->leftJoin('projects', 'tenders.project_id', '=', 'projects.id')
+                            ->select('tenders.*')
+                            ->selectRaw('
+                                CASE
+                                    WHEN tenders.component = "Nieuwbouw" AND projects.oppervlakte_begane_grond > 0
+                                        THEN tenders.total_price / projects.oppervlakte_begane_grond
+                                    WHEN tenders.component = "Sloopwerkzaamheden" AND projects.oppervlakte_perceel > 0
+                                        THEN tenders.total_price / projects.oppervlakte_perceel
+                                    ELSE NULL
+                                END as calculated_price_per_m2
+                            ')
+                            ->orderBy('calculated_price_per_m2', $direction);
+                    })
                     ->toggleable(),
                 TextColumn::make('created_at')
                     ->label('Aangemaakt op')

@@ -50,12 +50,16 @@ class TenderForm
                             ->label('Aanvraag')
                             ->native(false)
                             ->columnSpan(1),
+                        DatePicker::make('planning_date')
+                            ->label('Planning')
+                            ->native(false)
+                            ->columnSpan(1),
                         DatePicker::make('received_date')
                             ->label('Ontvangst')
                             ->native(false)
                             ->columnSpan(1),
                         TextInput::make('total_price')
-                            ->label('Totaal prijs')
+                            ->label('Totaalprijs')
                             ->numeric()
                             ->prefix('€')
                             ->rules(['nullable', 'numeric', 'min:0'])

@@ -26,24 +26,37 @@ class TendersRelationManager extends RelationManager
     {
         return $table
             ->columns([
-                TextColumn::make('contractor.company_name')
-                    ->label('Partij')
-                    ->sortable(),
                 TextColumn::make('component')
                     ->label('Onderdeel')
                     ->sortable(),
+                TextColumn::make('contractor.company_name')
+                    ->label('Partij')
+                    ->sortable(),
                 TextColumn::make('request_date')
                     ->label('Aanvraag')
-                    ->date()
+                    ->date('d-m-Y')
+                    ->sortable(),
+                TextColumn::make('planning_date')
+                    ->label('Planning')
+                    ->date('d-m-Y')
                     ->sortable(),
                 TextColumn::make('received_date')
                     ->label('Ontvangst')
-                    ->date()
+                    ->date('d-m-Y')
                     ->sortable(),
                 TextColumn::make('total_price')
-                    ->label('Totaal prijs')
+                    ->label('Totaalprijs')
                     ->money('eur', true)
                     ->sortable(),
+                TextColumn::make('price_per_square_meter')
+                    ->label('Meterprijs')
+                    ->state(function ($record): ?string {
+                        $pricePerM2 = $record->price_per_square_meter;
+
+                        return $pricePerM2 ? '€ '.number_format($pricePerM2, 2, ',', '.').'/m²' : '-';
+                    })
+                    ->sortable(false)
+                    ->toggleable(),
                 TextColumn::make('note')
                     ->label('Notitie')
                     ->limit(40)
