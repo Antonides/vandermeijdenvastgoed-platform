@@ -26,7 +26,17 @@ class ProjectForm
                         ->label('Beschrijving')
                 ->rows(3)
                         ->columnSpanFull(),
-                    Select::make('status')
+                    Select::make('project_status')
+                        ->label('Status')
+                        ->options([
+                            'ingepland' => 'Ingepland',
+                            'lopend' => 'Lopend',
+                            'afgerond' => 'Afgerond',
+                        ])
+                        ->default('ingepland')
+                        ->required()
+                        ->native(false),
+                    Select::make('build_status')
                         ->label('Bouwtermijn')
                         ->options([
                             'concept' => 'Concept',

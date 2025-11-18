@@ -22,11 +22,42 @@ class ProjectsTable
                     ->label('Beschrijving')
                     ->limit(60)
                     ->toggleable(),
-                TextColumn::make('status')
+                TextColumn::make('project_status')
                     ->label('Status')
                     ->badge()
+                    ->formatStateUsing(fn (?string $state) => match ($state) {
+                        'ingepland' => 'Ingepland',
+                        'lopend' => 'Lopend',
+                        'afgerond' => 'Afgerond',
+                        default => $state,
+                    })
+                    ->color(fn (?string $state) => match ($state) {
+                        'ingepland' => 'warning',
+                        'lopend' => 'info',
+                        'afgerond' => 'success',
+                        default => 'secondary',
+                    })
                     ->sortable()
                     ->toggleable(),
+                TextColumn::make('build_status')
+                    ->label('Bouwtermijn')
+                    ->badge()
+                    ->formatStateUsing(fn (?string $state) => match ($state) {
+                        'concept' => 'Concept',
+                        'start_bouw' => 'Start bouw',
+                        'start_fundering' => 'Start fundering',
+                        'start_begane_grondvloer' => 'Start begane grondvloer',
+                        'verdiepingsvloer_gereed' => 'Verdiepingsvloer gereed',
+                        'start_eerste_verdiepingsvloer' => 'Start eerste verdiepingsvloer',
+                        'dakvloer_gereed' => 'Dakvloer gereed',
+                        'start_gevelbekleding' => 'Start gevelbekleding',
+                        'wind_en_waterdicht' => 'Wind- en waterdicht',
+                        'oplevering' => 'Oplevering',
+                        'sleuteloverdracht' => 'Sleuteloverdracht',
+                        default => $state,
+                    })
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('city')
                     ->label('Plaats')
                     ->sortable()

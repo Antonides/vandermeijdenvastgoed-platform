@@ -14,11 +14,12 @@ class Project extends Model
     protected $fillable = [
         'title',
         'description',
+        'project_status',
         'city',
         'street',
         'house_number',
         'permit',
-        'status',
+        'build_status',
         'current_term',
         'start_build_date',
         'completion_date',
