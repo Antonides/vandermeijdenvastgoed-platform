@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Projects;
 use App\Filament\Resources\Projects\Pages\CreateProject;
 use App\Filament\Resources\Projects\Pages\EditProject;
 use App\Filament\Resources\Projects\Pages\ListProjects;
+use App\Filament\Resources\Projects\RelationManagers\ContactsRelationManager;
 use App\Filament\Resources\Projects\RelationManagers\NotesRelationManager;
 use App\Filament\Resources\Projects\RelationManagers\TendersRelationManager;
 use App\Filament\Resources\Projects\RelationManagers\WorkPreparationsRelationManager;
@@ -50,6 +51,7 @@ class ProjectResource extends Resource
             WorkPreparationsRelationManager::class,
             TendersRelationManager::class,
             NotesRelationManager::class,
+            ContactsRelationManager::class,
         ];
     }
 
