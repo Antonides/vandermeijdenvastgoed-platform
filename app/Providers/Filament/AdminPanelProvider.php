@@ -60,12 +60,12 @@ class AdminPanelProvider extends PanelProvider
             ->renderHook(
                 PanelsRenderHook::GLOBAL_SEARCH_BEFORE,
                 fn (): string => Blade::render('
-                    <div class="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200">
+                    <div class="flex items-center gap-1.5 px-3 py-2">
+                        <span class="text-xs text-gray-500 dark:text-gray-400">Week {{ now()->format("W") }}</span>
                         <x-filament::icon 
                             icon="heroicon-o-calendar" 
-                            class="h-5 w-5"
+                            class="h-4 w-4 text-gray-500 dark:text-gray-400"
                         />
-                        <span>Week {{ now()->format("W") }}</span>
                     </div>
                 ')
             );
