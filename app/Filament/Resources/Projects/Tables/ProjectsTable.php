@@ -16,8 +16,23 @@ class ProjectsTable
             ->columns([
                 TextColumn::make('title')
                     ->label('Titel')
-                    ->sortable()
-                    ->searchable(),
+                    ->getStateUsing(function ($record) {
+                        $parts = array_filter([
+                            $record->city,
+                            $record->street,
+                        ]);
+                        return implode(', ', $parts) ?: '-';
+                    })
+                    ->searchable(query: function ($query, $search) {
+                        return $query->where(function ($query) use ($search) {
+                            $query->where('city', 'like', "%{$search}%")
+                                ->orWhere('street', 'like', "%{$search}%");
+                        });
+                    })
+                    ->sortable(query: function ($query, $direction) {
+                        return $query->orderBy('city', $direction)
+                            ->orderBy('street', $direction);
+                    }),
                 TextColumn::make('description')
                     ->label('Beschrijving')
                     ->limit(60)
@@ -26,7 +41,7 @@ class ProjectsTable
                     ->label('Status')
                     ->badge()
                     ->formatStateUsing(fn (?string $state) => match ($state) {
-                        'ingepland' => 'Ingepland',
+                        'ingepland' => 'Gepland',
                         'lopend' => 'Lopend',
                         'afgerond' => 'Afgerond',
                         default => $state,
@@ -84,17 +99,14 @@ class ProjectsTable
                         default => 'secondary',
                     })
                     ->toggleable(),
-                TextColumn::make('current_term')
-                    ->label('Huidige termijn')
-                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('start_build_date')
                     ->label('Start bouw')
-                    ->date()
+                    ->formatStateUsing(fn ($state) => $state ? \Carbon\Carbon::parse($state)->translatedFormat('F Y') : '-')
                     ->sortable()
                     ->toggleable(),
                 TextColumn::make('completion_date')
                     ->label('Oplevering')
-                    ->date()
+                    ->formatStateUsing(fn ($state) => $state ? \Carbon\Carbon::parse($state)->translatedFormat('F Y') : '-')
                     ->sortable()
                     ->toggleable(),
                 TextColumn::make('demolitionContractor.company_name')

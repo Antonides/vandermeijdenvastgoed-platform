@@ -20,7 +20,6 @@ class Project extends Model
         'house_number',
         'permit',
         'build_status',
-        'current_term',
         'start_build_date',
         'completion_date',
         'demolition_contractor_id',

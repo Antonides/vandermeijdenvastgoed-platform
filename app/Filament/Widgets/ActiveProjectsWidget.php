@@ -12,16 +12,25 @@ class ActiveProjectsWidget extends Widget
     protected string $view = 'filament.widgets.active-projects-widget';
 
     protected int | string | array $columnSpan = 'full';
+    
+    protected ?string $heading = '';
 
     public function getActiveProjects()
     {
         return Project::where('project_status', 'lopend')
-            ->orderBy('title')
+            ->orderBy('city')
+            ->orderBy('street')
             ->get()
             ->map(function ($project) {
+                $parts = array_filter([
+                    $project->city,
+                    $project->street,
+                ]);
+                $title = implode(', ', $parts) ?: '-';
+                
                 return [
                     'id' => $project->id,
-                    'title' => $project->title,
+                    'title' => $title,
                     'build_status' => $project->build_status,
                     'progress' => $this->calculateProgress($project->build_status),
                 ];

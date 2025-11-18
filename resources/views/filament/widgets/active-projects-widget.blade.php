@@ -1,9 +1,5 @@
 <x-filament-widgets::widget>
     <x-filament::section>
-        <x-slot name="heading">
-            Lopende Projecten
-        </x-slot>
-
         @php
             $projects = $this->getActiveProjects();
         @endphp

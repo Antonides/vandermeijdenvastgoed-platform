@@ -12,20 +12,22 @@ class ProjectStatsOverview extends BaseWidget
     
     protected int | string | array $columnSpan = 'full';
     
+    protected ?string $heading = '';
+    
     protected function getStats(): array
     {
         return [
-            Stat::make('Ingepland', Project::where('project_status', 'ingepland')->count())
+            Stat::make('', Project::where('project_status', 'ingepland')->count())
                 ->description('Projecten in planning')
                 ->descriptionIcon('heroicon-m-calendar')
                 ->color('warning'),
             
-            Stat::make('Lopend', Project::where('project_status', 'lopend')->count())
-                ->description('Actieve projecten')
+            Stat::make('', Project::where('project_status', 'lopend')->count())
+                ->description('Lopende projecten')
                 ->descriptionIcon('heroicon-m-arrow-path')
                 ->color('info'),
             
-            Stat::make('Afgerond', Project::where('project_status', 'afgerond')->count())
+            Stat::make('', Project::where('project_status', 'afgerond')->count())
                 ->description('Voltooide projecten')
                 ->descriptionIcon('heroicon-m-check-circle')
                 ->color('success'),

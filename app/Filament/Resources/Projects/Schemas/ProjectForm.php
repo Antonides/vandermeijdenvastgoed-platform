@@ -18,10 +18,6 @@ class ProjectForm
                 ->columns(2)
                 ->columnSpanFull()
                 ->schema([
-                    TextInput::make('title')
-                        ->label('Titel')
-                        ->maxLength(255)
-                        ->columnSpanFull(),
                     Textarea::make('description')
                         ->label('Beschrijving')
                 ->rows(3)
@@ -29,7 +25,7 @@ class ProjectForm
                     Select::make('project_status')
                         ->label('Status')
                         ->options([
-                            'ingepland' => 'Ingepland',
+                            'ingepland' => 'Gepland',
                             'lopend' => 'Lopend',
                             'afgerond' => 'Afgerond',
                         ])
@@ -76,10 +72,12 @@ class ProjectForm
                 ->schema([
                     TextInput::make('city')
                         ->label('Plaats')
-                        ->maxLength(255),
+                        ->maxLength(255)
+                        ->required(),
                     TextInput::make('street')
                         ->label('Straat')
-                        ->maxLength(255),
+                        ->maxLength(255)
+                        ->required(),
                     TextInput::make('house_number')
                         ->label('Huisnummer')
                         ->maxLength(255),
