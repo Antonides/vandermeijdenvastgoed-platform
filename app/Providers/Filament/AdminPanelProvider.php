@@ -19,7 +19,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use Illuminate\Support\Facades\Blade;
+use Illuminate\Contracts\View\View;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -60,15 +60,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->renderHook(
                 PanelsRenderHook::GLOBAL_SEARCH_BEFORE,
-                fn (): string => Blade::render('
-                    <div class="flex flex-row items-center gap-1.5 px-3 py-2">
-                        <span class="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">Week {{ now()->format("W") }}</span>
-                        <x-filament::icon 
-                            icon="heroicon-o-calendar" 
-                            class="h-4 w-4 text-gray-500 dark:text-gray-400 flex-shrink-0"
-                        />
-                    </div>
-                ')
+                fn (): View => view('filament.components.week-number')
             );
     }
 }
