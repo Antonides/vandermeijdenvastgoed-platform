@@ -18,7 +18,13 @@ class TendersTable
             ->columns([
                 TextColumn::make('project.title')
                     ->label('Project')
-                    ->searchable()
+                    ->getStateUsing(fn ($record) => implode(', ', array_filter([$record->project->city, $record->project->street])) ?: '-')
+                    ->searchable(query: function ($query, $search) {
+                        $query->whereHas('project', function ($q) use ($search) {
+                            $q->where('city', 'like', "%{$search}%")
+                                ->orWhere('street', 'like', "%{$search}%");
+                        });
+                    })
                     ->sortable()
                     ->toggleable(),
                 TextColumn::make('contractor.company_name')
@@ -81,7 +87,7 @@ class TendersTable
             ->filters([
                 SelectFilter::make('project')
                     ->label('Project')
-                    ->relationship('project', 'title'),
+                    ->relationship('project', 'title', fn ($query) => $query->whereNotNull('title')),
                 SelectFilter::make('contractor')
                     ->label('Partij')
                     ->relationship('contractor', 'company_name'),

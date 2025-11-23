@@ -18,7 +18,7 @@ class ProjectNoteForm
         if ($includeProjectField) {
             $components[] = Select::make('project_id')
                 ->label('Project')
-                ->relationship('project', 'title')
+                ->relationship('project', 'title', fn ($query) => $query->whereNotNull('title'))
                 ->searchable()
                 ->preload()
                 ->placeholder('Geen project')

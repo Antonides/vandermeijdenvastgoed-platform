@@ -23,7 +23,8 @@ class WorkPreparationForm
             $sections[] = Select::make('project_id')
                 ->label('Project')
                 ->relationship('project', 'title')
-                ->searchable()
+                ->getOptionLabelFromRecordUsing(fn ($record) => implode(', ', array_filter([$record->city, $record->street])) ?: '-')
+                ->searchable(['title', 'city', 'street'])
                 ->preload()
                 ->native(false)
                 ->required()
@@ -72,6 +73,18 @@ class WorkPreparationForm
                     ])
                     ->default(WorkPreparation::STATUS_ACTION)
                     ->required()
+                    ->native(false)
+                    ->columnSpan(1),
+                DatePicker::make('request_date')
+                    ->label('Aanvraag')
+                    ->native(false)
+                    ->columnSpan(1),
+                DatePicker::make('planned_date')
+                    ->label('Planning')
+                    ->native(false)
+                    ->columnSpan(1),
+                DatePicker::make('received_date')
+                    ->label('Ontvangst')
                     ->native(false)
                     ->columnSpan(1),
                 Textarea::make('note')

@@ -19,7 +19,13 @@ class WorkPreparationsTable
             ->columns([
                 TextColumn::make('project.title')
                     ->label('Project')
-                    ->searchable()
+                    ->getStateUsing(fn ($record) => implode(', ', array_filter([$record->project->city, $record->project->street])) ?: '-')
+                    ->searchable(query: function ($query, $search) {
+                        $query->whereHas('project', function ($q) use ($search) {
+                            $q->where('city', 'like', "%{$search}%")
+                                ->orWhere('street', 'like', "%{$search}%");
+                        });
+                    })
                     ->sortable()
                     ->toggleable(),
                 TextColumn::make('component')
@@ -29,6 +35,7 @@ class WorkPreparationsTable
                 TextColumn::make('request_date')
                     ->label('Aanvraag')
                     ->date()
+                    ->getStateUsing(fn ($record) => $record->request_date ?? $record->quote_request_date)
                     ->sortable()
                     ->toggleable(),
                 TextColumn::make('planned_date')
@@ -39,6 +46,7 @@ class WorkPreparationsTable
                 TextColumn::make('received_date')
                     ->label('Ontvangst')
                     ->date()
+                    ->getStateUsing(fn ($record) => $record->received_date ?? $record->quote_received_date)
                     ->sortable()
                     ->toggleable(),
                 TextColumn::make('party')
@@ -72,7 +80,7 @@ class WorkPreparationsTable
             ->filters([
                 SelectFilter::make('project')
                     ->label('Project')
-                    ->relationship('project', 'title'),
+                    ->relationship('project', 'title', fn ($query) => $query->whereNotNull('title')),
                 SelectFilter::make('status')
                     ->label('Status')
                     ->options([
