@@ -25,11 +25,9 @@ FROM serversideup/php:8.3-fpm-nginx
 
 WORKDIR /var/www/html
 
-# Install additional PHP extensions if needed (serversideup image comes with most)
-# RUN install-php-extensions intl bcmath
-
-# Switch to root to copy files and set permissions
+# Install additional PHP extensions
 USER root
+RUN install-php-extensions intl bcmath zip
 
 COPY . .
 COPY --from=node_builder /app/public/build ./public/build
