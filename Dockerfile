@@ -35,20 +35,12 @@ COPY --from=node_builder /app/public/build ./public/build
 # Install composer dependencies
 RUN composer install --no-interaction --optimize-autoloader --no-dev
 
-# Fix permissions for the web user (www-data/1000)
-# serversideup image uses user 1000 by default for application
-RUN chown -R 9999:9999 /var/www/html/storage /var/www/html/bootstrap/cache
+# Fix permissions for the web user
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Switch back to the application user
-USER 9999
+# Add custom startup script to serversideup's entrypoint system
+COPY docker-entrypoint.sh /etc/entrypoint.d/99-laravel-deploy.sh
+RUN chmod +x /etc/entrypoint.d/99-laravel-deploy.sh
 
-# Set custom entrypoint for Laravel caching
-COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-USER root
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
-USER 9999
-
-ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
-
-EXPOSE 8080
+EXPOSE 80
 

@@ -1,16 +1,7 @@
 #!/bin/bash
 
-# Exit on error
-set -e
-
-# Run standard Laravel production commands
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-php artisan event:cache
-
-# Run migrations (be careful with this in production if you have multiple instances starting at once)
-# php artisan migrate --force
-
-# Start the main process (delegates back to the base image's entrypoint)
-exec /init
+# Run standard Laravel production commands as the web user to avoid permission issues
+su -s /bin/bash -c "php artisan config:cache" www-data
+su -s /bin/bash -c "php artisan route:cache" www-data
+su -s /bin/bash -c "php artisan view:cache" www-data
+su -s /bin/bash -c "php artisan event:cache" www-data
