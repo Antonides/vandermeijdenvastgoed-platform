@@ -1,3 +1,11 @@
+# Stage 1: Install Composer Dependencies (needed for Filament assets)
+FROM serversideup/php:8.3-fpm-nginx AS composer_deps
+WORKDIR /app
+USER root
+COPY . .
+RUN composer install --no-interaction --optimize-autoloader --no-scripts --ignore-platform-reqs
+
+# Stage 2: Build Frontend Assets
 FROM node:20-slim AS node_builder
 
 WORKDIR /app
@@ -7,9 +15,12 @@ RUN npm ci
 COPY resources ./resources
 COPY vite.config.js ./
 COPY public ./public
+# Copy vendor directory so Tailwind can find Filament assets
+COPY --from=composer_deps /app/vendor ./vendor
 
 RUN npm run build
 
+# Stage 3: Final Image
 FROM serversideup/php:8.3-fpm-nginx
 
 WORKDIR /var/www/html
