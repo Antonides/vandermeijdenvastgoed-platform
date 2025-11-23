@@ -50,3 +50,5 @@ USER 9999
 
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 
+EXPOSE 8080
+
