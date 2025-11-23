@@ -7,4 +7,4 @@ su -s /bin/bash -c "php artisan view:cache" www-data
 su -s /bin/bash -c "php artisan event:cache" www-data
 
 # Run migrations
-su -s /bin/bash -c "php artisan migrate --force" www-data
+# su -s /bin/bash -c "php artisan migrate --force" www-data
